@@ -76,7 +76,11 @@ class MyASGEGame(pyasge.ASGEGame):
         return False
 
     def initScoreboard(self) -> None:
-        pass
+        self.scoreboard = pyasge.Text(self.data.fonts["MainFont"])
+        self.scoreboard.x = 1300
+        self.scoreboard.y = 75
+        self.scoreboard.string = str(self.data.score).zfill(6)
+
 
     def initMenu(self) -> bool:
         self.data.fonts["MainFont"] = self.data.renderer.loadFont("/data/fonts/KGHAPPY.ttf", 64)
@@ -106,6 +110,7 @@ class MyASGEGame(pyasge.ASGEGame):
 
             if isInside(self.fish, event.x, event.y):
                 self.data.score += 1
+                self.scoreboard.string = str(self.data.score).zfill(6)
                 self.spawn()
 
     def keyHandler(self, event: pyasge.KeyEvent) -> None:
@@ -165,7 +170,9 @@ class MyASGEGame(pyasge.ASGEGame):
 
         else:
             # render the game here
+            self.data.renderer.render(self.scoreboard)
             self.data.renderer.render(self.fish)
+            pass
 
 
 def main():
